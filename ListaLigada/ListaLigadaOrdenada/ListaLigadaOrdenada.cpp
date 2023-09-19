@@ -125,29 +125,85 @@ void inserirElemento()
 	cin >> novo->valor;
 	novo->prox = NULL;
 
-	if (primeiro == NULL)
-	{
+	NO* aux = primeiro;
+	NO* ultimo = NULL;
+
+	while (aux != NULL) {
+		if (aux->valor == novo->valor) {
+			cout << "Elemento nao inserido pois esta repetindo!" << endl;
+			free(novo);
+			return;
+		}
+		else if (aux->valor > novo->valor) {
+			break;
+		}
+		ultimo = aux;
+		aux = aux->prox;
+	}
+
+	if (ultimo == NULL) {
+		novo->prox = primeiro;
 		primeiro = novo;
 	}
-	else
-	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
-		}
-		aux->prox = novo;
+	else {
+		novo->prox = aux;
+		ultimo->prox = novo;
 	}
 }
 
 void excluirElemento()
 {
+	NO* atual = primeiro;
+	NO* anterior = NULL;
+	int valorBuscado;
+	int controle = 0;
 
+	cout << "Digite um numero: ";
+	cin >> valorBuscado;
+
+	while (atual != NULL) {
+		if (atual->valor == valorBuscado) {
+			cout << "Elemento a ser excluido: " << atual->valor << endl;
+			if (anterior == NULL) {
+				primeiro = atual->prox;
+			}
+			else {
+				anterior->prox = atual->prox;
+			}
+			free(atual);
+			controle++;
+			return;
+		}
+		anterior = atual;
+		atual = atual->prox;
+	}
+
+	if (controle == 0) {
+		cout << "Valor nao encontrado!" << endl;
+	}
 }
 
 void buscarElemento()
 {
+	NO* atual = primeiro;
+	int valorBuscado;
+	int controle = 0;
+	
 
+	cout << "Digite um numero: ";
+	cin >> valorBuscado;
+
+	while (atual != NULL) {
+		if (atual->valor == valorBuscado) {
+			cout << "Encontrado: " << atual->valor << endl;
+			controle++;
+			return;
+		}
+		atual = atual->prox;
+	}
+	if (controle == 0) {
+		cout << "Valor nao encontrado!" << endl;
+	}
 }
 
 
